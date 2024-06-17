@@ -30,3 +30,9 @@ export function createProgram(gl: WebGLRenderingContext, vertexShader: WebGLShad
   console.log(gl.getProgramInfoLog(program));
   gl.deleteProgram(program);
 }
+
+export function getProgram(gl: WebGLRenderingContext, vertexShaderSource: string, fragmentShaderSource: string) {
+  const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+  const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+  return createProgram(gl, vertexShader, fragmentShader);
+}

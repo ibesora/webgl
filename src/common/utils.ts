@@ -12,3 +12,12 @@ export function resizeCanvasToDisplaySize(canvas: HTMLCanvasElement) {
  
   return needResize;
 }
+
+export function setFullScreenViewport(gl: WebGLRenderingContext) {
+  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+}
+
+export function clear(gl: WebGLRenderingContext, r: number, g: number, b: number, a: number) {
+  gl.clearColor(r, g, b, a);
+  gl.clear(gl.COLOR_BUFFER_BIT);
+}

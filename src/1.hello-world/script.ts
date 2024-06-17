@@ -1,5 +1,9 @@
-import { resizeCanvasToDisplaySize } from "../common/utils";
-import { createProgram, createShader } from "../common/shaders";
+import { clear, resizeCanvasToDisplaySize, setFullScreenViewport } from "../common/utils";
+import { getProgram } from "../common/shaders";
+import vertexShaderSource from "./vertex.glsl";
+import fragmentShaderSource from "./fragment.glsl";
+import { getArrayBufferf32 } from "../common/buffer";
+
 
 const canvas: HTMLCanvasElement | null =
   document.querySelector("#webgl-canvas");
@@ -8,43 +12,18 @@ if (!gl) {
   throw "WebGL not supported";
 }
 
-const vertexShaderSource = `
-  attribute vec4 a_position;
- 
-  void main() {
-    gl_Position = a_position;
-  }
-`;
-const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-
-
-const fragmentShaderSource = `
-  precision mediump float;
-  void main() {
-    gl_FragColor = vec4(1, 0, 0.5, 1);
-  }
-`;
-const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
-
-const program = createProgram(gl, vertexShader, fragmentShader);
-
+const program = getProgram(gl, vertexShaderSource, fragmentShaderSource);
 const positionAttributeLocation = gl.getAttribLocation(program, "a_position");
-const positionBuffer = gl.createBuffer();
-gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
 
 const positions = [
   0, 0,
   0, 0.5,
   0.7, 0,
 ];
-gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW);
-
+const positionBuffer = getArrayBufferf32(gl, positions)
 resizeCanvasToDisplaySize(canvas);
-
-gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-
-gl.clearColor(0, 0, 0, 0);
-gl.clear(gl.COLOR_BUFFER_BIT);
+setFullScreenViewport(gl);
+clear(gl, 0, 0, 0, 0);
 
 gl.useProgram(program);
 gl.enableVertexAttribArray(positionAttributeLocation);
