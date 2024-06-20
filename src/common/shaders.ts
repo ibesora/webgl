@@ -13,7 +13,7 @@ export function createShader(
     return shader;
   }
 
-  console.log(gl.getShaderInfoLog(shader));
+  console.error(`Creating ${type === gl.VERTEX_SHADER ? "Vertex" : "Fragment"} shader: ${gl.getShaderInfoLog(shader)}`);
   gl.deleteShader(shader);
 }
 
@@ -27,7 +27,7 @@ export function createProgram(gl: WebGLRenderingContext, vertexShader: WebGLShad
     return program;
   }
  
-  console.log(gl.getProgramInfoLog(program));
+  console.error(`Creating program: ${gl.getProgramInfoLog(program)}`);
   gl.deleteProgram(program);
 }
 

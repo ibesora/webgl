@@ -22,14 +22,6 @@ function render(gl: WebGLRenderingContext, canvas: HTMLCanvasElement) {
   const resolutionUniformLocation = gl.getUniformLocation(program, "u_resolution");
   const colorUniformLocation = gl.getUniformLocation(program, "u_color");
 
-  const positions = [
-    10, 20,
-    80, 20,
-    10, 30,
-    10, 30,
-    80, 20,
-    80, 30,
-  ];
   const positionBuffer = getAndBindArrayBuffer(gl);
   resizeCanvasToDisplaySize(canvas);
   setFullScreenViewport(gl);

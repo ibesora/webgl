@@ -4,6 +4,7 @@ const files = {
   "1.hello-world": "./src/1.hello-world/script.ts",
   "2.pixels": "./src/2.pixels/script.ts",
   "3.color": "./src/3.color/script.ts",
+  "4.single-draw-call": "./src/4.single-draw-call/script.ts",
 }
 
 module.exports = {
