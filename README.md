@@ -8,6 +8,7 @@ WebGL only cares about 2 things: clip space coordinates and colors. Vertex shade
 You'll find all these under the `src/` folder
 - **1.hello-world:** A first take at rendering a triangle using clip coordinates
 - **2.pixels:** Show how to render a rectangle using screen coordinates
+- **3.color:** Show how to render multiple rectangles and setting a color
 
 ## Glossary
 ### Attributes

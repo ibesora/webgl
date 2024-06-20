@@ -3,6 +3,7 @@ const path = require("path");
 const files = {
   "1.hello-world": "./src/1.hello-world/script.ts",
   "2.pixels": "./src/2.pixels/script.ts",
+  "3.color": "./src/3.color/script.ts",
 }
 
 module.exports = {
