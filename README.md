@@ -4,6 +4,11 @@ This are implementations of various things in WebGL 1/2
 ## What's WebGL
 WebGL only cares about 2 things: clip space coordinates and colors. Vertex shaders provides clip space coordinates and Fragment shaders provide the colors.
 
+## Examaples
+You'll find all these under the `src/` folder
+- **1.hello-world:** A first take at rendering a triangle using clip coordinates
+- **2.pixels:** Show how to render a rectangle using screen coordinates
+
 ## Glossary
 ### Attributes
 

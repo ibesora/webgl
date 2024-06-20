@@ -34,5 +34,6 @@ export function createProgram(gl: WebGLRenderingContext, vertexShader: WebGLShad
 export function getProgram(gl: WebGLRenderingContext, vertexShaderSource: string, fragmentShaderSource: string) {
   const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
   const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+  if (!vertexShader || !fragmentShader) return;
   return createProgram(gl, vertexShader, fragmentShader);
 }
