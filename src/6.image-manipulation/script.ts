@@ -22,6 +22,12 @@ function render(
     program,
     "u_resolution",
   );
+  const textureSizeUniformLocation = gl.getUniformLocation(
+    program,
+    "u_textureSize",
+  );
+  const kernelLocation = gl.getUniformLocation(program, "u_kernel[0]");
+  const kernelWeightLocation = gl.getUniformLocation(program, "u_kernelWeight");
 
   const positionBuffer = getAndBindArrayBuffer(gl);
   resizeCanvasToDisplaySize(canvas);
@@ -32,6 +38,14 @@ function render(
   gl.enableVertexAttribArray(positionAttributeLocation);
   gl.enableVertexAttribArray(texCoordAttributeLocation);
   gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
+  gl.uniform2f(textureSizeUniformLocation, image.width, image.height);
+  // Gaussian blur kernel
+  // const kernel = [0.0625, 0.125, 0.0625, 0.125, 0.25, 0.125, 0.0625, 0.125, 0.0625];
+  // Edge detection kernel
+  const kernel = [-1, -1, -1, -1,  8, -1, -1, -1, -1];
+  gl.uniform1fv(kernelLocation, kernel);
+  gl.uniform1f(kernelWeightLocation, kernel.reduce((acc, val) => acc + val, 0));
+  
 
   const size = 2;
   const type = gl.FLOAT;

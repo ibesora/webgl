@@ -6,6 +6,7 @@ const folders = [
   "3.color",
   "4.single-draw-call",
   "5.textures",
+  "6.image-manipulation",
 ];
 
 const files = folders.reduce((acc, folder) => {

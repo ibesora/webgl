@@ -15,6 +15,7 @@ You'll find all these under the `src/` folder
 - **3.color:** Show how to render multiple rectangles and setting a color
 - **4.single-draw-call:** Render multiple rectangles with a single draw call
 - **5.textures:** Use a texture to be rendered on a rectangle
+- **6.image-manipulation:** Use WebGL to do image manipulation
 
 ## Glossary
 
