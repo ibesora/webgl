@@ -13,11 +13,17 @@ export function createShader(
     return shader;
   }
 
-  console.error(`Creating ${type === gl.VERTEX_SHADER ? "Vertex" : "Fragment"} shader: ${gl.getShaderInfoLog(shader)}`);
+  console.error(
+    `Creating ${type === gl.VERTEX_SHADER ? "Vertex" : "Fragment"} shader: ${gl.getShaderInfoLog(shader)}`,
+  );
   gl.deleteShader(shader);
 }
 
-export function createProgram(gl: WebGLRenderingContext, vertexShader: WebGLShader, fragmentShader: WebGLShader) {
+export function createProgram(
+  gl: WebGLRenderingContext,
+  vertexShader: WebGLShader,
+  fragmentShader: WebGLShader,
+) {
   var program = gl.createProgram();
   gl.attachShader(program, vertexShader);
   gl.attachShader(program, fragmentShader);
@@ -26,14 +32,22 @@ export function createProgram(gl: WebGLRenderingContext, vertexShader: WebGLShad
   if (success) {
     return program;
   }
- 
+
   console.error(`Creating program: ${gl.getProgramInfoLog(program)}`);
   gl.deleteProgram(program);
 }
 
-export function getProgram(gl: WebGLRenderingContext, vertexShaderSource: string, fragmentShaderSource: string) {
+export function getProgram(
+  gl: WebGLRenderingContext,
+  vertexShaderSource: string,
+  fragmentShaderSource: string,
+) {
   const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-  const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+  const fragmentShader = createShader(
+    gl,
+    gl.FRAGMENT_SHADER,
+    fragmentShaderSource,
+  );
   if (!vertexShader || !fragmentShader) return;
   return createProgram(gl, vertexShader, fragmentShader);
 }

@@ -7,26 +7,21 @@ import { getProgram } from "../common/shader";
 import vertexShaderSource from "./vertex.glsl";
 import fragmentShaderSource from "./fragment.glsl";
 import { getAndBindArrayBuffer } from "../common/buffer";
+import { getAndBindTexture } from "../common/texture";
 
-const canvas: HTMLCanvasElement | null =
-  document.querySelector("#webgl-canvas");
-const gl = canvas?.getContext("webgl");
-if (!gl) {
-  throw "WebGL not supported";
-}
-if (!canvas) {
-  throw "No canvas";
-}
-
-function render(gl: WebGLRenderingContext, canvas: HTMLCanvasElement) {
+function render(
+  gl: WebGLRenderingContext,
+  canvas: HTMLCanvasElement,
+  image: HTMLImageElement,
+) {
   const program = getProgram(gl, vertexShaderSource, fragmentShaderSource);
   if (!program) return;
   const positionAttributeLocation = gl.getAttribLocation(program, "a_position");
+  const texCoordAttributeLocation = gl.getAttribLocation(program, "a_texCoord");
   const resolutionUniformLocation = gl.getUniformLocation(
     program,
     "u_resolution",
   );
-  const colorUniformLocation = gl.getUniformLocation(program, "u_color");
 
   const positionBuffer = getAndBindArrayBuffer(gl);
   resizeCanvasToDisplaySize(canvas);
@@ -35,6 +30,7 @@ function render(gl: WebGLRenderingContext, canvas: HTMLCanvasElement) {
 
   gl.useProgram(program);
   gl.enableVertexAttribArray(positionAttributeLocation);
+  gl.enableVertexAttribArray(texCoordAttributeLocation);
   gl.uniform2f(resolutionUniformLocation, gl.canvas.width, gl.canvas.height);
 
   const size = 2;
@@ -51,23 +47,27 @@ function render(gl: WebGLRenderingContext, canvas: HTMLCanvasElement) {
     offset,
   );
 
-  for (let i = 0; i < 50; i++) {
-    setRectangleBuffer(
-      gl,
-      randomInt(300),
-      randomInt(300),
-      randomInt(300),
-      randomInt(300),
-    );
-    gl.uniform4f(
-      colorUniformLocation,
-      Math.random(),
-      Math.random(),
-      Math.random(),
-      1,
-    );
-    gl.drawArrays(gl.TRIANGLES, 0, 6);
-  }
+  setRectangleBuffer(gl, 100, 100, 100, 100);
+
+  const texCoordBuffer = getAndBindArrayBuffer(gl);
+  gl.vertexAttribPointer(texCoordAttributeLocation, 2, gl.FLOAT, false, 0, 0);
+  gl.bufferData(
+    gl.ARRAY_BUFFER,
+    new Float32Array([
+      0.0, 0.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0,
+    ]),
+    gl.STATIC_DRAW,
+  );
+
+  const texture = getAndBindTexture(gl);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+
+  gl.drawArrays(gl.TRIANGLES, 0, 6);
 }
 
 function setRectangleBuffer(
@@ -88,8 +88,22 @@ function setRectangleBuffer(
   );
 }
 
-function randomInt(range: number) {
-  return Math.floor(Math.random() * range);
+function main() {
+  const canvas: HTMLCanvasElement | null =
+    document.querySelector("#webgl-canvas");
+  const gl = canvas?.getContext("webgl");
+  if (!gl) {
+    throw "WebGL not supported";
+  }
+  if (!canvas) {
+    throw "No canvas";
+  }
+
+  const image = new Image();
+  image.src = "./berga.jpg";
+  image.onload = function () {
+    render(gl, canvas, image);
+  };
 }
 
-render(gl, canvas);
+main();

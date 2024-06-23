@@ -1,11 +1,17 @@
 const path = require("path");
 
-const files = {
-  "1.hello-world": "./src/1.hello-world/script.ts",
-  "2.pixels": "./src/2.pixels/script.ts",
-  "3.color": "./src/3.color/script.ts",
-  "4.single-draw-call": "./src/4.single-draw-call/script.ts",
-}
+const folders = [
+  "1.hello-world",
+  "2.pixels",
+  "3.color",
+  "4.single-draw-call",
+  "5.textures",
+];
+
+const files = folders.reduce((acc, folder) => {
+  acc[`${folder}`] = `./src/${folder}/script.ts`;
+  return acc;
+}, {});
 
 module.exports = {
   entry: files,
@@ -19,9 +25,9 @@ module.exports = {
       },
       {
         test: /\.(glsl|vs|fs)$/,
-        loader: 'ts-shader-loader'
-      }
-    ]
+        loader: "ts-shader-loader",
+      },
+    ],
   },
   resolve: {
     extensions: [".tsx", ".ts", ".js"],

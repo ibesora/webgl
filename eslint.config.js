@@ -1,5 +1,5 @@
 export default [
   {
-      ignores: ["webpack.config.js"]
-  }
+    ignores: ["webpack.config.js"],
+  },
 ];
