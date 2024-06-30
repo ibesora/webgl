@@ -16,6 +16,7 @@ You'll find all these under the `src/` folder
 - **4.single-draw-call:** Render multiple rectangles with a single draw call
 - **5.textures:** Use a texture to be rendered on a rectangle
 - **6.image-manipulation:** Use WebGL to do image manipulation
+- **7.matrices:** Pixel to clip space transform using matrices
 
 ## Glossary
 
@@ -37,6 +38,42 @@ Clip space XYZ coordinates are in the `[-1, 1]` range.
 ![Clip space](images/clip_space_graph.svg)
 
 Clip space is the step before the perspective division that will get us Normalized Device Coordinates.
+
+## Column-major vs Row-major matrices
+
+Given an array of 9 values: `[a, b, c, d, e, f, g, h, i]`
+Using row-major, which is what's used in mathematical notation, we get the following matrix
+
+```
+a b c
+d e f
+g h i
+```
+
+Using column-major, which is what WebGL and OpenGL uses, you get the following matrix
+
+```
+a d g
+b e h
+c f i
+```
+
+Notice that this means that translation and rotation matries are transposed vs the classical mathematics notation. Scaling matrices are symmetrical, meaning that they are the same when transposed.
+
+```
+# Translation matrix in Math
+1 0 tx
+0 1 ty
+0 0 1
+```
+
+```Translation matrix in WebGL
+const translationMatrix = [
+  1  0  0
+  0  1  0
+  tx ty 1
+]
+```
 
 ### Textures
 

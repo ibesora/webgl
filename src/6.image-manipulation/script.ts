@@ -42,10 +42,12 @@ function render(
   // Gaussian blur kernel
   // const kernel = [0.0625, 0.125, 0.0625, 0.125, 0.25, 0.125, 0.0625, 0.125, 0.0625];
   // Edge detection kernel
-  const kernel = [-1, -1, -1, -1,  8, -1, -1, -1, -1];
+  const kernel = [-1, -1, -1, -1, 8, -1, -1, -1, -1];
   gl.uniform1fv(kernelLocation, kernel);
-  gl.uniform1f(kernelWeightLocation, kernel.reduce((acc, val) => acc + val, 0));
-  
+  gl.uniform1f(
+    kernelWeightLocation,
+    kernel.reduce((acc, val) => acc + val, 0),
+  );
 
   const size = 2;
   const type = gl.FLOAT;
