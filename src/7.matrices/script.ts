@@ -35,19 +35,14 @@ function render(gl: WebGLRenderingContext, canvas: HTMLCanvasElement) {
   // Project from screen space to clip space by doing coords / resolution * 2 - 1 in
   // a single matrix.
   const projectionMatrix = mat3.identity(mat3.create());
-  const divByResolutionMatrix = scale2dMatrix(1.0 / gl.canvas.width, 1.0 / gl.canvas.height) as mat3;
+  const divByResolutionMatrix = scale2dMatrix(
+    1.0 / gl.canvas.width,
+    1.0 / gl.canvas.height,
+  ) as mat3;
   const scaleByTwoMatrix = scale2dMatrix(2, 2) as mat3;
   const translateByMinusOneMatrix = translate2dMatrix(-1, -1) as mat3;
-  mat3.multiply(
-    projectionMatrix,
-    translateByMinusOneMatrix,
-    scaleByTwoMatrix
-  );
-  mat3.multiply(
-    projectionMatrix,
-    projectionMatrix,
-    divByResolutionMatrix
-  );
+  mat3.multiply(projectionMatrix, translateByMinusOneMatrix, scaleByTwoMatrix);
+  mat3.multiply(projectionMatrix, projectionMatrix, divByResolutionMatrix);
   gl.uniformMatrix3fv(matrixUniformLocation, false, projectionMatrix);
 
   gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);

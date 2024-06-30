@@ -8,6 +8,7 @@ const folders = [
   "5.textures",
   "6.image-manipulation",
   "7.matrices",
+  "8.indexed-vertices",
 ];
 
 const files = folders.reduce((acc, folder) => {

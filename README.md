@@ -17,6 +17,7 @@ You'll find all these under the `src/` folder
 - **5.textures:** Use a texture to be rendered on a rectangle
 - **6.image-manipulation:** Use WebGL to do image manipulation
 - **7.matrices:** Pixel to clip space transform using matrices
+- **8.indexed-vertices:** Render multiple rectangles using a vertex index buffer
 
 ## Glossary
 
